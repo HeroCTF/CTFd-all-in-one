@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from requests import post
 
 load_dotenv()
-BASE_URL = getenv("CTFD_API_URL")
+CTFD_API_URL = getenv("CTFD_CTFD_API_URL") + "/api/v1"
 HEADERS = {"Authorization": "Token " + getenv("CTFD_API_TOKEN")}
 COOKIES = {"session": getenv("CTFD_COOKIE_SESSION")}
 
@@ -48,7 +48,7 @@ class Challenge:
         self.add_tags()
 
     def delete_challenge(self):
-        req_json = loads(delete(BASE_URL + "/challenges/" + self.id, json=data, headers=HEADERS, cookies=COOKIES,).text)
+        req_json = loads(delete(CTFD_API_URL + "/challenges/" + self.id, json=data, headers=HEADERS, cookies=COOKIES,).text)
         assert req_json["success"]
 
     def add_challenge(self):
@@ -62,7 +62,7 @@ class Challenge:
             "state": self.state,
         }
 
-        req_json = loads(post(BASE_URL + "/challenges", json=data, headers=HEADERS, cookies=COOKIES).text)
+        req_json = loads(post(CTFD_API_URL + "/challenges", json=data, headers=HEADERS, cookies=COOKIES).text)
         assert req_json["success"]
 
         self.id = req_json["data"]["id"]
@@ -75,21 +75,21 @@ class Challenge:
             "challenge": self.id,
         }
 
-        req_json = loads(post(BASE_URL + "/flags", json=data, headers=HEADERS, cookies=COOKIES).text)
+        req_json = loads(post(CTFD_API_URL + "/flags", json=data, headers=HEADERS, cookies=COOKIES).text)
         assert req_json["success"]
 
     def add_hints(self):
         for hint in self.hints:
             data = {"content": hint, "cost": 0, "challenge": self.id}
 
-            req_json = loads(post(BASE_URL + "/hints", json=data, headers=HEADERS, cookies=COOKIES).text)
+            req_json = loads(post(CTFD_API_URL + "/hints", json=data, headers=HEADERS, cookies=COOKIES).text)
             assert req_json["success"]
 
     def add_tags(self):
         for tag in self.tags:
             data = {"challenge": self.id, "value": tag}
 
-            req_json = loads(post(BASE_URL + "/tags", json=data, headers=HEADERS, cookies=COOKIES).text)
+            req_json = loads(post(CTFD_API_URL + "/tags", json=data, headers=HEADERS, cookies=COOKIES).text)
             assert req_json["success"]
 
 
