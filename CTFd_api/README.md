@@ -61,3 +61,7 @@ Hero{flag_number_2}
 - Dates
 - Images
 - Pages
+
+## Backup
+
+**ctfd_backup.sh** is a bash script that allows you to make a backup of your CTFd instance.
