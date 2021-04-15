@@ -106,7 +106,7 @@
         mode: "0644"
 
     - name: Extract the custom theme
-      ansible.builtin.unarchive:
+      unarchive:
         src: "files/hacker_theme.zip"
         dest: "/home/{{ whoami.stdout }}/CTFd/CTFd/themes/hacker_theme/"
 
