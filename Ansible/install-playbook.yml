@@ -1,5 +1,5 @@
 ---
-- hosts: ctfd
+- hosts: localhost
   gather_facts: no
 
   tasks:
@@ -73,7 +73,7 @@
         group: "{{ whoami.stdout }}"
         mode: "0644"
 
-    - name: Creates conf directory
+    - name: Create conf directory
       file:
         path: "/home/{{ whoami.stdout }}/CTFd/conf/nginx/certs"
         state: directory
@@ -108,7 +108,7 @@
     - name: Extract the custom theme
       unarchive:
         src: "files/hacker_theme.zip"
-        dest: "/home/{{ whoami.stdout }}/CTFd/CTFd/themes/hacker_theme/"
+        dest: "/home/{{ whoami.stdout }}/CTFd/CTFd/themes/"
 
     - name: Start CTFd docker-compose
       shell: "docker-compose up -d --build"
