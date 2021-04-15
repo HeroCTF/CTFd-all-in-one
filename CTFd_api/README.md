@@ -2,7 +2,7 @@
 
 ## Upload challenges
 
-The script **upload_challenges.py** reads recursively all the README.md of a folder and its subfolders, parse their contents and uploads the different challenges to CTFd.
+The script [upload_challenges.py](upload_challenges.py) reads recursively all the README.md of a folder and its subfolders, parse their contents and uploads the different challenges to CTFd.
 
 All the README.md must have the same syntax to be read by the parser. If you do not need a category, for example, if your challenge do not have any hints, you can simply remove the category.
 
@@ -64,4 +64,4 @@ Hero{flag_number_2}
 
 ## Backup
 
-**ctfd_backup.sh** is a bash script that allows you to make a backup of your CTFd instance.
+[ctfd_backup.sh](ctfd_backup.sh) is a bash script that allows you to make a backup of your CTFd instance.
