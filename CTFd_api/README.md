@@ -2,7 +2,7 @@
 
 ## Upload challenges
 
-The script **upload_challenges.py** reads recursively all the README.md in a folder and this sub-folders, parse the content of it and upload the different challenges to CTFd.
+The script **upload_challenges.py** reads recursively all the README.md of a folder and its subfolders, parse their contents and uploads the different challenges to CTFd.
 
 All the README.md must have the same syntax to be read by the parser. If you do not need a category, for example, if your challenge do not have any hints, you can simply remove the category.
 
@@ -52,3 +52,12 @@ Hero{flag_number_2}
 - Allow hints
 - Files upload
 - Prerequisite challenge
+
+## Configure CTFd
+
+### Todos
+
+- Name of the event
+- Dates
+- Images
+- Pages

@@ -1,2 +1,6 @@
 .env
 venv/
+
+# Ansible
+certs/
+hacker_theme.zip

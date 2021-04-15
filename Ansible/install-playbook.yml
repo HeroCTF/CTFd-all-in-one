@@ -1,0 +1,117 @@
+---
+- hosts: ctfd
+  gather_facts: no
+
+  tasks:
+    - name: Get current user name
+      command: whoami
+      changed_when: false
+      become: no
+      register: whoami
+
+    - name: Update repositories
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Install usefull packages
+      apt:
+        pkg:
+          - vim
+          - git
+          - unzip
+      become: yes
+
+    - name: Install docker
+      apt:
+        pkg:
+          - docker.io
+          - docker-compose
+      become: yes
+    
+    - name: Enable and start docker
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+    
+    - name: Add docker group to the user '{{ whoami.stdout }}'
+      user:
+        name: "{{ whoami.stdout }}"
+        groups: docker
+        append: yes
+      become: yes
+
+    - name: Clone CTFd
+      ansible.builtin.git:
+        repo: "https://github.com/CTFd/CTFd.git"
+        dest: "/home/{{ whoami.stdout }}/CTFd"
+        force: yes
+    
+    - name: Copy .env
+      copy:
+        src: "files/.env"
+        dest: "/home/{{ whoami.stdout }}/CTFd/.env"
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0644"
+
+    - name: Copy docker-compose.yml
+      copy:
+        src: "files/docker-compose.yml"
+        dest: "/home/{{ whoami.stdout }}/CTFd/docker-compose.yml"
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0644"
+
+    - name: Copy http.conf
+      copy:
+        src: "files/http.conf"
+        dest: "/home/{{ whoami.stdout }}/CTFd/conf/nginx/http.conf"
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0644"
+
+    - name: Creates conf directory
+      file:
+        path: "/home/{{ whoami.stdout }}/CTFd/conf/nginx/certs"
+        state: directory
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0775"
+
+    - name: Copy fullchain.pem
+      copy:
+        src: "files/certs/fullchain.pem"
+        dest: "/home/{{ whoami.stdout }}/CTFd/conf/nginx/certs/fullchain.pem"
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0644"
+
+    - name: Copy privkey.pem
+      copy:
+        src: "files/certs/privkey.pem"
+        dest: "/home/{{ whoami.stdout }}/CTFd/conf/nginx/certs/privkey.pem"
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0644"
+
+    - name: Copy challenge.py # with first blood bot
+      copy:
+        src: "files/challenge.py"
+        dest: "/home/{{ whoami.stdout }}/CTFd/CTFd/api/v1/challenges.py"
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0644"
+
+    - name: Extract the custom theme
+      ansible.builtin.unarchive:
+        src: "files/hacker_theme.zip"
+        dest: "/home/{{ whoami.stdout }}/CTFd/CTFd/themes/hacker_theme/"
+
+    - name: Start CTFd docker-compose
+      shell: "docker-compose up -d --build"
+      args:
+        chdir: "/home/{{ whoami.stdout }}/CTFd"
+      become: yes
