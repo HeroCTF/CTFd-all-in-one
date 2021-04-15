@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from requests import post
 
 load_dotenv()
-CTFD_API_URL = getenv("CTFD_CTFD_API_URL") + "/api/v1"
+CTFD_API_URL = getenv("CTFD_BASE_URL") + "/api/v1"
 HEADERS = {"Authorization": "Token " + getenv("CTFD_API_TOKEN")}
 COOKIES = {"session": getenv("CTFD_COOKIE_SESSION")}
 
