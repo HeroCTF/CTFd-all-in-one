@@ -1,0 +1,31 @@
+name: Make CTFd backup
+
+on:
+  schedule:
+    - cron:  '0 14,18,22 * * *'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    
+    env:
+      BACKUP_PATH: /tmp/ctfd_backup.zip
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install curl
+      shell: bash
+      run: |
+        sudo apt install curl
+
+    - name: Do backup
+      shell: bash
+      run: curl "https://heroctf.fr/admin/export" -b "session=${{ secrets.CTFD_COOKIE_SESSION }}" -o "${{ env.BACKUP_PATH }}"
+
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ctfd_backup
+        path: "${{ env.BACKUP_PATH }}"
+        retention-days: 7
