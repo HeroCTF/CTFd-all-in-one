@@ -1,0 +1,50 @@
+---
+- hosts: challs
+  gather_facts: no
+
+  tasks:
+    - name: Get current user name
+      command: whoami
+      changed_when: false
+      become: no
+      register: whoami
+
+    - name: Update repositories
+      apt:
+        update_cache: yes
+      become: yes
+
+    - name: Install usefull packages
+      apt:
+        pkg:
+          - vim
+          - git
+          - unzip
+      become: yes
+
+    - name: Install docker
+      apt:
+        pkg:
+          - docker.io
+          - docker-compose
+      become: yes
+    
+    - name: Enable and start docker
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+    
+    - name: Add docker group to the user '{{ whoami.stdout }}'
+      user:
+        name: "{{ whoami.stdout }}"
+        groups: docker
+        append: yes
+      become: yes
+
+    - name: Clone HeroCTF_v3
+      git:
+        repo: "https://github.com/HeroCTF/HeroCTF_v3.git"
+        dest: "/home/{{ whoami.stdout }}/HeroCTF_v3"
+        force: yes
