@@ -9,3 +9,15 @@ variable "instance_type" {
 variable "number_of_instances" {
     type = number
 }
+
+variable "zone" {
+    type = string
+}
+
+variable "image" {
+    type = string
+}
+
+variable "disk_size" {
+    type = number
+}

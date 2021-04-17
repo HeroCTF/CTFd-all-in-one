@@ -3,13 +3,14 @@ resource "random_id" "instance_id" {
 }
 
 resource "google_compute_instance" "challs" {
-    name         = "${var.name}-${random_id.instance_id.hex}"
+    name         = "${var.instance_name}-${random_id.instance_id.hex}"
     machine_type = var.instance_type
     zone         = var.zone
 
     boot_disk {
         initialize_params {
             image = var.image
+            size = var.disk_size
         }
     }
 

@@ -29,3 +29,7 @@ variable "instance_type" {
 variable "number_of_instances" {
   type    = number
 }
+
+variable "disk_size" {
+  type    = number
+}
