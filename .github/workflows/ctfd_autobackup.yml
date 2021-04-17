@@ -1,9 +1,8 @@
 name: Make CTFd backup
 
 on:
-  repository_dispatch:
   schedule:
-    - cron:  '0 14,18,22 * * *'
+    - cron:  '0 12,16,21 * * *'
 
 jobs:
   deploy:
@@ -18,7 +17,7 @@ jobs:
     - name: Install curl
       shell: bash
       run: |
-        sudo apt install curl
+        sudo apt install curl -y
 
     - name: Do backup
       shell: bash
