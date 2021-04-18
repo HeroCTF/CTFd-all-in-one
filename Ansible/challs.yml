@@ -1,11 +1,5 @@
 ---
 
-- hosts: ctfd
-  gather_facts: yes
-
-  roles:
-  - ctfd
-
 - hosts: challs
   gather_facts: no
 
