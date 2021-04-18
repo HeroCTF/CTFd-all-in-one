@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = file("cloud_credentials.json")
+  credentials = file("credentials/cloud_credentials.json")
 
   project = var.project
 

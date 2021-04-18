@@ -25,3 +25,11 @@ variable "disk_size" {
 variable "subnetwork_name" {
   type = string
 }
+
+variable "ssh_user" {
+  default = "heroctf"
+}
+
+variable "ssh_pub_key" {
+  default = "./credentials/gcp.pub"
+}

@@ -11,6 +11,10 @@ resource "google_compute_instance" "challs" {
         }
     }
 
+    metadata = {
+        ssh-keys = "${var.ssh_user}:${file(var.ssh_pub_key)}"
+    }
+
     network_interface {
         subnetwork = var.subnetwork_name
 

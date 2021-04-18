@@ -9,4 +9,7 @@ hacker_theme.zip
 # Terraform
 .terraform/
 .terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
 cloud_credentials.json
+gcp.pub
