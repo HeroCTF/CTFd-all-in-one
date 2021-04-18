@@ -2,9 +2,9 @@
 venv/
 
 # Ansible
-certs/
 hacker_theme.zip
 *.key
+*.pem
 
 # Terraform
 .terraform/
