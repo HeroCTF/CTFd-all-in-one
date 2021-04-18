@@ -49,6 +49,13 @@ $ ansible-playbook challs.yml -i inventories/dev
 $ ansible-playbook challs.yml -i inventories/prod
 ```
 
+## Todos
+
+- CTFd theme not required
+- Custom name for CTFd theme
+- Fisrt blood bot not required
+- Run CTFd API script to automate the Web configuration of CTFd
+
 ## About
 
 Tested on debian 10.
