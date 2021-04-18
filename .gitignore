@@ -2,10 +2,14 @@
 venv/
 
 # Ansible
-certs/
 hacker_theme.zip
+*.key
+*.pem
 
 # Terraform
 .terraform/
 .terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
 cloud_credentials.json
+gcp.pub

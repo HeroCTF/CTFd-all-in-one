@@ -1,0 +1,35 @@
+variable "instance_name" {
+    type = string
+}
+
+variable "instance_type" {
+    type = string
+}
+
+variable "number_of_instances" {
+    type = number
+}
+
+variable "zone" {
+    type = string
+}
+
+variable "image" {
+    type = string
+}
+
+variable "disk_size" {
+    type = number
+}
+
+variable "subnetwork_name" {
+  type = string
+}
+
+variable "ssh_user" {
+  default = "heroctf"
+}
+
+variable "ssh_pub_key" {
+  default = "./credentials/gcp.pub"
+}
