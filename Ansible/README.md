@@ -39,7 +39,7 @@ $ ansible-playbook ctfd.yml -i inventories/prod
 
 ### Setup
 
-3. Change the git URL of challenges (if needed) in [challs](group_vars/challs).
+3. Change the git URL of challenges (if needed) in [ctfd](group_vars/challs).
 4. Add your own configuration to the [files](roles/challs/files/) folder : 
 - Add Github SSH key (github.key)
 5. Run the playbook :
