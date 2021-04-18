@@ -21,3 +21,7 @@ variable "image" {
 variable "disk_size" {
     type = number
 }
+
+variable "subnetwork_name" {
+  type = string
+}

@@ -1,11 +1,8 @@
-resource "random_id" "instance_id" {
-    byte_length = 8
-}
-
 resource "google_compute_instance" "challs" {
-    name         = "${var.instance_name}-${random_id.instance_id.hex}"
+    name         = var.instance_name
     machine_type = var.instance_type
     zone         = var.zone
+    # count       = var.number_of_instances
 
     boot_disk {
         initialize_params {
@@ -15,7 +12,7 @@ resource "google_compute_instance" "challs" {
     }
 
     network_interface {
-        network = "default"
+        subnetwork = var.subnetwork_name
 
         access_config {
             
