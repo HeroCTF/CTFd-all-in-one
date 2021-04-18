@@ -17,12 +17,13 @@
 
 ### Setup
 
-3. Add your own configuration to the [files](roles/ctfd/files/) folder : 
+3. Change the CTFd version (if needed) in [challs](group_vars/ctfd).
+4. Add your own configuration to the [files](roles/ctfd/files/) folder : 
 - Add fullchain.pem and privkey.pem to [certs](roles/ctfd/files/certs).
 - Add CTFd Theme (hacker_theme.zip)
 - Add CTFd environment file (.env)
 - Configure Nginx conf (http.conf)
-4. Run the playbook :
+5. Run the playbook :
 
 ```shell
 $ ansible-playbook ctfd.yml -i inventories/dev
@@ -38,9 +39,10 @@ $ ansible-playbook ctfd.yml -i inventories/prod
 
 ### Setup
 
-3. Add your own configuration to the [files](roles/challs/files/) folder : 
+3. Change the git URL of challenges (if needed) in [challs](group_vars/challs).
+4. Add your own configuration to the [files](roles/challs/files/) folder : 
 - Add Github SSH key (github.key)
-4. Run the playbook :
+5. Run the playbook :
 
 ```shell
 $ ansible-playbook challs.yml -i inventories/dev
