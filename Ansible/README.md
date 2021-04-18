@@ -11,11 +11,16 @@
 
 1. Install ansible.
 2. Configure the [inventory](inventory) with our SSH information.
-3. Add your own certificates, theme, nginx conf, ... into the [files](files/) folder.
+3. Add your own configuration to the [files](files/) folder : 
+- Certificates
+- CTFd Theme
+- .env for CTFd
+- Nginx configuration
+- Github SSH key
 3. Run the playbook :
 
 ```shell
-$ ansible-playbook install-playbook.yml -i inventory
+$ ansible-playbook <playbook_name> -i <inventory>
 ```
 
 ## About
