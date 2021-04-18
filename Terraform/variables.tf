@@ -48,11 +48,3 @@ variable "os" {
     "debian10" = "debian-cloud/debian-10"
   }
 }
-
-variable "subnetwork_region" {
-  default = "europe-west2"
-}
-
-variable "network" {
-  default = "heroctf-network"
-}

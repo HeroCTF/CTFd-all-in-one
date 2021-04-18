@@ -1,25 +1,49 @@
 resource "google_compute_instance" "challs" {
-    name         = var.instance_name
-    machine_type = var.instance_type
-    zone         = var.zone
-    # count       = var.number_of_instances
+  name         = var.challs_instance_name
+  machine_type = var.challs_instance_type
+  count        = var.challs_count
+  zone         = var.zone
 
-    boot_disk {
-        initialize_params {
-            image = var.image
-            size = var.disk_size
-        }
+  boot_disk {
+    initialize_params {
+      image = var.image
+      size  = var.disk_size
     }
+  }
 
-    metadata = {
-        ssh-keys = "${var.ssh_user}:${file(var.ssh_pub_key)}"
+  metadata = {
+    ssh-keys = "${var.ssh_user}:${file(var.ssh_pub_key)}"
+  }
+
+  network_interface {
+    subnetwork = var.subnetwork_name
+    access_config {}
+  }
+}
+
+resource "google_compute_instance" "box" {
+  name         = var.box_instance_name
+  machine_type = var.box_instance_type
+  count        = var.box_count
+  zone         = var.zone
+
+  boot_disk {
+    initialize_params {
+      image = var.image
+      size  = var.disk_size
     }
+  }
 
-    network_interface {
-        subnetwork = var.subnetwork_name
+  metadata = {
+    ssh-keys = "${var.ssh_user}:${file(var.ssh_pub_key)}"
+  }
 
-        access_config {
-            
-        }
-    }
+  network_interface {
+    subnetwork = var.subnetwork_name
+    access_config {}
+  }
+}
+
+resource "google_compute_address" "public_ip_address" {
+  name = "public-ip"
 }
