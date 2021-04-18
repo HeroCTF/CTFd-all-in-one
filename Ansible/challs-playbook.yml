@@ -58,3 +58,8 @@
         accept_hostkey: yes
         key_file: "/home/{{ whoami.stdout }}/github.key"
         force: yes
+
+    - name: Remove github.key
+      file:
+        state: absent
+        path: "/home/{{ whoami.stdout }}/github.key"
