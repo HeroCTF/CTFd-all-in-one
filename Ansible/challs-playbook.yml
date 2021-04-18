@@ -43,8 +43,18 @@
         append: yes
       become: yes
 
-    - name: Clone HeroCTF_v3
+    - name: Copy github.key
+      copy:
+        src: "files/github.key"
+        dest: "/home/{{ whoami.stdout }}/github.key"
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0600"
+
+    - name: Clone HeroCTF challenges
       git:
-        repo: "https://github.com/HeroCTF/HeroCTF_v3.git"
-        dest: "/home/{{ whoami.stdout }}/HeroCTF_v3"
+        repo: "git@github.com:HeroCTF/HeroCTF_v3.git"
+        dest: "/home/{{ whoami.stdout }}/challenges"
+        accept_hostkey: yes
+        key_file: "/home/{{ whoami.stdout }}/github.key"
         force: yes
