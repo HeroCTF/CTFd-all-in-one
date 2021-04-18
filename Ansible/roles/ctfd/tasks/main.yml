@@ -113,3 +113,4 @@
   args:
     chdir: "/home/{{ whoami.stdout }}/CTFd"
   become: yes
+  when: ansible_memtotal_mb >= 2048 
