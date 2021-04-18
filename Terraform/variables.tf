@@ -13,16 +13,34 @@ variable "zone" {
   default = "europe-west2-c"
 }
 
-variable "instance_name" {
-  type = string
+variable "challs_instance_name" {
+  type        = string
+  description = "Name of challs VM."
 }
 
-variable "instance_type" {
-  type = string
+variable "challs_instance_type" {
+  type        = string
+  description = "Type of challs VM."
 }
 
-variable "number_of_instances" {
-  type = number
+variable "challs_count" {
+  type        = number
+  description = "Number of challs VM."
+}
+
+variable "box_instance_name" {
+  type        = string
+  description = "Name of box VM."
+}
+
+variable "box_instance_type" {
+  type        = string
+  description = "Type of box VM."
+}
+
+variable "box_count" {
+  type        = number
+  description = "Number of box VM."
 }
 
 variable "disk_size" {

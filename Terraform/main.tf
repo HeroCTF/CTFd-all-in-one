@@ -1,11 +1,15 @@
 module "challs_instance" {
   source = "./modules/challs"
 
-  instance_name       = var.instance_name
-  instance_type       = var.instance_type
-  number_of_instances = var.number_of_instances
-  zone                = var.zone
-  image               = var.os["debian10"]
-  disk_size           = var.disk_size
-  subnetwork_name     = google_compute_subnetwork.heroctf_network_subnetwork.name
+  challs_instance_name = var.challs_instance_name
+  challs_instance_type = var.challs_instance_type
+  challs_count         = var.challs_count
+
+  box_instance_name = var.box_instance_name
+  box_instance_type = var.box_instance_type
+  box_count         = var.box_count
+
+  zone      = var.zone
+  image     = var.os["debian10"]
+  disk_size = var.disk_size
 }

@@ -1,5 +1,5 @@
 resource "google_compute_instance" "challs" {
-  name         = var.challs_instance_name
+  name         = "${var.challs_instance_name}-${count.index}"
   machine_type = var.challs_instance_type
   count        = var.challs_count
   zone         = var.zone
@@ -16,13 +16,13 @@ resource "google_compute_instance" "challs" {
   }
 
   network_interface {
-    subnetwork = var.subnetwork_name
+    subnetwork = google_compute_subnetwork.challs_network_subnetwork.name
     access_config {}
   }
 }
 
 resource "google_compute_instance" "box" {
-  name         = var.box_instance_name
+  name         = "${var.box_instance_name}-${count.index}"
   machine_type = var.box_instance_type
   count        = var.box_count
   zone         = var.zone
@@ -39,7 +39,7 @@ resource "google_compute_instance" "box" {
   }
 
   network_interface {
-    subnetwork = var.subnetwork_name
+    subnetwork = google_compute_subnetwork.challs_network_subnetwork.name
     access_config {}
   }
 }
