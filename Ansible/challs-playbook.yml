@@ -43,23 +43,31 @@
         append: yes
       become: yes
 
+    - name: Create ~/.ssh directory
+      file:
+        path: "/home/{{ whoami.stdout }}/.ssh"
+        state: directory
+
     - name: Copy github.key
       copy:
-        src: "files/github.key"
-        dest: "/home/{{ whoami.stdout }}/github.key"
+        src: files/github.key
+        dest: "/home/{{ whoami.stdout }}/.ssh/github.key"
         owner: "{{ whoami.stdout }}"
         group: "{{ whoami.stdout }}"
         mode: "0600"
+    
+    - name: Copy ssh config file
+      template:
+        src: ssh_config.j2
+        dest: "/home/{{ whoami.stdout }}/.ssh/config"
+        owner: "{{ whoami.stdout }}"
+        group: "{{ whoami.stdout }}"
+        mode: "0644"
 
     - name: Clone HeroCTF challenges
       git:
         repo: "git@github.com:HeroCTF/HeroCTF_v3.git"
         dest: "/home/{{ whoami.stdout }}/challenges"
         accept_hostkey: yes
-        key_file: "/home/{{ whoami.stdout }}/github.key"
+        key_file: "/home/{{ whoami.stdout }}/.ssh/github.key"
         force: yes
-
-    - name: Remove github.key
-      file:
-        state: absent
-        path: "/home/{{ whoami.stdout }}/github.key"
