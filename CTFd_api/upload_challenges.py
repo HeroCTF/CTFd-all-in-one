@@ -25,6 +25,7 @@ class Challenge:
         score=0,
         max_attempts=0,
         hints=None,
+        tags=None
     ):
         self.id = 0
         self.name = name
@@ -33,9 +34,10 @@ class Challenge:
         self.flags = flags
         self.chall_type = chall_type
         self.score = score
-        self.max_attempts = max_attemps
+        self.max_attempts = max_attempts
         self.hints = hints
         self.state = ["hidden", "visible"][1]
+        self.tags = tags
 
     def update(self):
         self.delete_challenge()
@@ -68,29 +70,32 @@ class Challenge:
         self.id = req_json["data"]["id"]
 
     def add_flags(self):
-        data = {
-            "content": self.flag,
-            "type": "static",
-            "data": "case_insensitive",
-            "challenge": self.id,
-        }
+        if self.flags:
+            data = {
+                "content": self.flags,
+                "type": "static",
+                "data": "case_insensitive",
+                "challenge": self.id,
+            }
 
-        req_json = loads(post(CTFD_API_URL + "/flags", json=data, headers=HEADERS, cookies=COOKIES).text)
-        assert req_json["success"]
+            req_json = loads(post(CTFD_API_URL + "/flags", json=data, headers=HEADERS, cookies=COOKIES).text)
+            assert req_json["success"]
 
     def add_hints(self):
-        for hint in self.hints:
-            data = {"content": hint, "cost": 0, "challenge": self.id}
+        if self.hints:
+            for hint in self.hints:
+                data = {"content": hint, "cost": 0, "challenge": self.id}
 
-            req_json = loads(post(CTFD_API_URL + "/hints", json=data, headers=HEADERS, cookies=COOKIES).text)
-            assert req_json["success"]
+                req_json = loads(post(CTFD_API_URL + "/hints", json=data, headers=HEADERS, cookies=COOKIES).text)
+                assert req_json["success"]
 
     def add_tags(self):
-        for tag in self.tags:
-            data = {"challenge": self.id, "value": tag}
+        if self.tags:
+            for tag in self.tags:
+                data = {"challenge": self.id, "value": tag}
 
-            req_json = loads(post(CTFD_API_URL + "/tags", json=data, headers=HEADERS, cookies=COOKIES).text)
-            assert req_json["success"]
+                req_json = loads(post(CTFD_API_URL + "/tags", json=data, headers=HEADERS, cookies=COOKIES).text)
+                assert req_json["success"]
 
 
 def find_line(content, search):
@@ -122,4 +127,6 @@ if __name__ == "__main__":
         with open(md_path, "r") as markdown:
             title, category, description, flag = parser(markdown.readlines())
 
-            add_challenge(title, category, description, flag)
+            # print(title, category, description, flag)
+            chall = Challenge(title, category, description, flag)
+            chall.create_challenge()
