@@ -9,3 +9,7 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+## Todo
+
+- Setup DNS configuration for OVH
