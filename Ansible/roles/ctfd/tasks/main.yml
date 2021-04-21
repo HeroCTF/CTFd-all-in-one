@@ -64,8 +64,8 @@
     mode: "0644"
 
 - name: Copy http.conf
-  copy:
-    src: "files/http.conf"
+  template:
+    src: http.conf.j2
     dest: "/home/{{ whoami.stdout }}/CTFd/conf/nginx/http.conf"
     owner: "{{ whoami.stdout }}"
     group: "{{ whoami.stdout }}"

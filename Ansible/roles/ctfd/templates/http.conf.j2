@@ -15,7 +15,7 @@ http {
 
   server {
     listen 80;
-    server_name www.heroctf.fr heroctf.fr;
+    server_name {{ hostname }};
     
     return 301 https://$server_name$request_uri;
   }
@@ -23,7 +23,7 @@ http {
   server {
     listen 443 ssl;
 
-    server_name www.heroctf.fr heroctf.fr;
+    server_name {{ hostname }};
 
     ssl_certificate /etc/nginx/certs/fullchain.pem;
     ssl_certificate_key /etc/nginx/certs/privkey.pem;
