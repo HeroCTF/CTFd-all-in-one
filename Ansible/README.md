@@ -17,7 +17,7 @@
 
 ### Setup
 
-3. Change the CTFd version (if needed) in [challs](group_vars/ctfd).
+3. Change the CTFd version (if needed) and the hostname in [challs](group_vars/ctfd).
 4. Add your own configuration to the [files](roles/ctfd/files/) folder : 
 - Add fullchain.pem and privkey.pem to [certs](roles/ctfd/files/certs).
 - Add CTFd Theme (hacker_theme.zip)
