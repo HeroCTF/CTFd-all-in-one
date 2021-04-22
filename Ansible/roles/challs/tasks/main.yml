@@ -17,6 +17,7 @@
       - vim
       - git
       - unzip
+      - netcat
   become: yes
 
 - name: Install docker
