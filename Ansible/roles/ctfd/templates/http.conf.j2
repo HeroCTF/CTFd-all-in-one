@@ -1,28 +1,28 @@
-worker_processes 4;
+worker_processes auto;
 
 events {
-
   worker_connections 1024;
 }
 
 http {
 
-  # Configuration containing list of application servers
-  upstream app_servers {
+  sendfile            on;
+  tcp_nopush          on;
+  tcp_nodelay         on;
 
+  upstream app_servers {
     server ctfd:8000;
   }
 
   server {
     listen 80;
     server_name {{ hostname }};
-    
+
     return 301 https://$server_name$request_uri;
   }
 
   server {
     listen 443 ssl;
-
     server_name {{ hostname }};
 
     ssl_certificate /etc/nginx/certs/fullchain.pem;
@@ -32,7 +32,6 @@ http {
 
     # Handle Server Sent Events for Notifications
     location /events {
-
       proxy_pass http://app_servers;
       proxy_set_header Connection '';
       proxy_http_version 1.1;
@@ -46,9 +45,22 @@ http {
       proxy_set_header X-Forwarded-Host $server_name;
     }
 
+    # Cache static files
+    location ~*  \.(jpg|jpeg|png|gif|ico|css)$ {
+        access_log off;
+        expires 7d;
+        add_header Cache-Control public;
+
+        tcp_nodelay off;
+
+        open_file_cache max=3000 inactive=120s;
+        open_file_cache_valid 45s;
+        open_file_cache_min_uses 2;
+        open_file_cache_errors off;
+    }
+
     # Proxy connections to the application servers
     location / {
-
       proxy_pass http://app_servers;
       proxy_redirect off;
       proxy_set_header Host $host;
